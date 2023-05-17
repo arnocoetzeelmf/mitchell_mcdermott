@@ -6,9 +6,9 @@
     <body>
         <table border="1">
             <tr>
-                <td>First Name</td>
-                <td>Last Name</td>
-                <td>City Name</td>
+                <th>Title</th>
+                <th>Blog</th>
+                <th>Publication Date/Time</th>
             </tr>
             @foreach ($blogs as $blog)
             <tr>
