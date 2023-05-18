@@ -37,7 +37,7 @@
                     @foreach ($blogs as $blog)
                     <tr>
                         <td>{{ $blog->blog_title }}</td>
-                        <td>{{ $blog->blog_text }}</td>
+                        <td>{!! nl2br($blog->blog_text) !!}</td>
                         <td>{{ $blog->publication_datetime }}</td>
                         <td>{{ $blog->name }}</td>
                     </tr>

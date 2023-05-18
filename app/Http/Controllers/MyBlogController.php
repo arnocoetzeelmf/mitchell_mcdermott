@@ -28,6 +28,14 @@ class MyBlogController extends Controller
     {
         $user = Auth::user();
 
+        $request->validate([
+            'blog_title' => 'required',
+            'blog_text' => 'required'
+        ], [
+            'blog_title.required' => 'Blog title is required.',
+            'blog_text.required' => 'Blog details is required.'
+        ]);
+
         $request->merge(['user_id' => $user->id]);
 
         $my_blog = Blog::create($request->all());

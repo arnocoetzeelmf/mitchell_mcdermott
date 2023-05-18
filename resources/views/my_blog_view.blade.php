@@ -39,7 +39,7 @@
                     @foreach ($blogs as $blog)
                     <tr>
                         <td>{{ $blog->blog_title }}</td>
-                        <td>{{ $blog->blog_text }}</td>
+                        <td>{!! nl2br($blog->blog_text) !!}</td>
                         <td>{{ $blog->publication_datetime }}</td>
                     </tr>
                     @endforeach
@@ -64,9 +64,14 @@
                                 <div class="col-sm-12">
                                     <textarea rows="18" id="blog_text" name="blog_text" required placeholder="Enter Blog Details Here" class="form-control"></textarea>
                                 </div>
-                            </div>            
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>
+                            </div>
+                            <div class="row">
+                            <div class="pl-4 col-6 text-left">
+                                    <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Save changes</button>
+                                </div>
+                                <div class="pr-4 col-6 text-right">
+                                    <button type="submit" class="btn btn-primary" id="cancelBtn" value="create">Cancel</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -110,9 +115,20 @@
                     location.reload();
                     jQuery('#blogModel').modal('hide');
                 }).fail(function (e) {
-                    console.log(e);
-                    jQuery('#blogModel').modal('hide');
+                    if(e.status == 422){
+                        let errors_object = JSON.parse(e.responseText);
+                        alert(errors_object.message);
+                    }else{
+                        alert(e.statusText);
+                    }
                 });
+            });
+
+            jQuery('#cancelBtn').click(function (e) {
+                e.preventDefault();
+                if(confirm('Are you sure you want to cancel?\nAll all changes you made will be lost.')){
+                    jQuery('#blogModel').modal('hide');
+                }
             });
         });
     </script>
