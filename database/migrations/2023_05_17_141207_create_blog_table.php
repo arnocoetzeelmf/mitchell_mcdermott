@@ -16,8 +16,13 @@ return new class extends Migration
             $table->string('blog_title', 200)->nullable(false);
             $table->text('blog_text')->nullable(false);
             $table->datetime('publication_datetime')->nullable(false)->useCurrent();
+            $table->unsignedBigInteger('user_id')->nullable(false);
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users')->onDelete('restrict');
         });
+
     }
 
     /**
