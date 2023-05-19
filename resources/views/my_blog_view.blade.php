@@ -5,7 +5,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <title>My Blogs</title>
@@ -32,7 +31,7 @@
                     <tr>
                         <th width="20%">Title</th>
                         <th width="60%">Blog</th>
-                        <th width="20%">Publication Date/Time</th>
+                        <th width="20%"><a id="publication_datetime_order" href="">Publication Date/Time</a></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,8 +58,9 @@
                             <div class="form-group">
                                 <label for="name" class="col-sm-2 control-label">Title</label>
                                 <div class="col-sm-12">
-                                    <input type="text" class="form-control" id="blog_title" name="blog_title" placeholder="Enter Title" value="" maxlength="200" required>
+                                    <input type="text" class="form-control" id="blog_title" name="blog_title" placeholder="Enter Title Here" value="" maxlength="200" required>
                                 </div>
+                                <label for="name" class="pt-3 col-sm-2 control-label">Details</label>
                                 <div class="col-sm-12">
                                     <textarea rows="18" id="blog_text" name="blog_text" required placeholder="Enter Blog Details Here" class="form-control"></textarea>
                                 </div>
@@ -126,8 +126,22 @@
 
             jQuery('#cancelBtn').click(function (e) {
                 e.preventDefault();
-                if(confirm('Are you sure you want to cancel?\nAll all changes you made will be lost.')){
+                if(confirm('Are you sure you want to cancel?\nAll changes you made will be lost.')){
                     jQuery('#blogModel').modal('hide');
+                }
+            });
+
+            jQuery('#publication_datetime_order').click(function (e) {
+                e.preventDefault();
+                console.log('ordering');
+
+                var searchParams = new URLSearchParams(window.location.search);
+                if(searchParams.has('order')){
+                    let param = searchParams.get('order');
+                    console.log(param);
+                    window.location = 'my_blog_view?order='+(param == 'desc' ? 'asc' : 'desc');
+                }else{
+                    window.location = 'my_blog_view?order=asc';
                 }
             });
         });

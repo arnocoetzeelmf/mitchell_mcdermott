@@ -2,6 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
         <title>All Blogs</title>
     </head>
     <body>
@@ -29,7 +30,7 @@
                     <tr>
                         <th width="20%">Title</th>
                         <th width="60%">Blog</th>
-                        <th width="10%">Publication Date/Time</th>
+                        <th width="10%"><a id="publication_datetime_order" href="">Publication Date/Time</a></th>
                         <th width="10%">Created By</th>
                     </tr>
                 </thead>
@@ -46,4 +47,21 @@
             </table>
         </div>
     </body>
+    <script type="text/javascript">
+        jQuery(function () {
+            jQuery('#publication_datetime_order').click(function (e) {
+                e.preventDefault();
+                console.log('ordering');
+
+                var searchParams = new URLSearchParams(window.location.search);
+                if(searchParams.has('order')){
+                    let param = searchParams.get('order');
+                    console.log(param);
+                    window.location = 'blog_view?order='+(param == 'desc' ? 'asc' : 'desc');
+                }else{
+                    window.location = 'blog_view?order=asc';
+                }
+            });
+        });
+    </script>
 </html>

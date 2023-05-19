@@ -21,14 +21,14 @@ Route::get('/', function () {
 });
 
 Route::get('blog_view', [BlogController::class, 'showAllBlogs']);
-Route::get('my_blog_view', [MyBlogController::class, 'showMyBlogs']);
+Route::get('my_blog_view/{order?}', [MyBlogController::class, 'showMyBlogs']);
 Route::post('my_blog_view/store', [MyBlogController::class, 'store']);
+Route::get('blog/import', [MyBlogController::class, 'importExternalBlogs']);
 
 Auth::routes();
 
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', function () {
     return redirect()->intended('my_blog_view');
 });
