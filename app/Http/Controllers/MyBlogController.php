@@ -22,6 +22,7 @@ class MyBlogController extends Controller
         $my_blogs = Blog::select(['blog_title', 'blog_text', 'publication_datetime'])
             ->where('user_id', $user->id)
             ->orderBy('publication_datetime', ($request->has('order') ? $request->order : 'desc'))
+            ->take(100)//limit the number of entries to 50 to prevent the return dataset from being too big - this can/will be improved with pagination
             ->get();
 
         return view('my_blog_view',['blogs' => $my_blogs]);
@@ -47,6 +48,8 @@ class MyBlogController extends Controller
     }
 
     public function importExternalBlogs(Request $request){
+        $external_source_url = "https://candidate-test.sq1.io/api.php";
+
         $admin_user = User::where('email', 'arno.coetzee.admin@gmail.com')->first();
 
         if($admin_user){
@@ -63,12 +66,14 @@ class MyBlogController extends Controller
             foreach($output_array->articles as $article){
                 $blog = Blog::updateOrCreate(
                     [
+                        'external_source' => $external_source_url,
+                        'external_id' => $article->id,
+                    ],
+                    [
                         'blog_title' => $article->title,
                         'blog_text' => $article->description,
                         'publication_datetime' => Carbon::parse($article->publishedAt)->toDateTimeString(),
                         'user_id' => $admin_user->id
-                    ],
-                    [
                     ]
                 );
             }

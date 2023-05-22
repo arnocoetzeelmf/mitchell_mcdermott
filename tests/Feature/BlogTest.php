@@ -43,7 +43,7 @@ class BlogTest extends TestCase
         );
 
         $reponse = $this->actingAs($created_user)
-            ->json('POST', 'http://localhost:8000/my_blog_view/store', $post_data)
+            ->json('POST', 'my_blog_view/store', $post_data)
             ->assertStatus(201);
     }
 

@@ -28,6 +28,7 @@ class BlogFactory extends Factory
             'blog_title' => $this->faker->sentence(10),
             'blog_text' => $this->faker->paragraph(),
             'publication_datetime' => $this->faker->dateTimeBetween('-3 months', 'now'),
+            'user_id' => 1,
         ];
     }
 }

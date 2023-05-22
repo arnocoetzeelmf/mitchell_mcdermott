@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('blog_title', 200)->nullable(false);
             $table->text('blog_text')->nullable(false);
+            $table->string('external_source', 400)->nullable(true);
+            $table->unsignedBigInteger('external_id')->nullable(true);
             $table->datetime('publication_datetime')->nullable(false)->useCurrent();
             $table->unsignedBigInteger('user_id')->nullable(false);
             $table->timestamps();
